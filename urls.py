@@ -1,0 +1,2 @@
+auth = "https://discordapp.com/api/oauth2/authorize?client_id={}&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fresponse&response_type=code&scope=rpc.api%20email%20identify%20guilds%20messages.read%20rpc%20rpc.notifications.read"
+converttoken = "https://discordapp.com/api/oauth2/token?grant_type=authorization_code&code={}&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fresponse"
