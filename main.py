@@ -11,7 +11,7 @@ def index():
 	redirect = quote(auth.redirect)
 	scopes = quote(auth.scopes)
 
-	url = urls.auth.format(auth.id, redirect, scopes)
+	url = urls.auth.format(urls.baseapi, auth.id, redirect, scopes)
 
 	return render_template('index.html', url=url)
 

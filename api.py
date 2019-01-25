@@ -13,6 +13,6 @@ def exchange_code(code):
 	headers = {
 		'Content-Type': 'application/x-www-form-urlencoded'
 	}
-	r = requests.post('{}/oauth2/token'.format(urls.api), data, headers)
+	r = requests.post('{}/oauth2/token'.format(urls.baseapi), data, headers)
 	r.raise_for_status()
 	return r.json()
