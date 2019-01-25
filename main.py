@@ -1,21 +1,27 @@
 from flask import Flask, render_template, request
-import urls, requests
+from static import urls, auth
+from urllib.parse import quote
+import requests, api
 
 app = Flask(__name__)
 port = 8000
 
 @app.route('/')
 def index():
-	url = urls.auth.format("464532048833544193")
+	redirect = quote(auth.redirect)
+	scopes = quote(auth.scopes)
+
+	url = urls.auth.format(auth.id, redirect, scopes)
+
 	return render_template('index.html', url=url)
 
 @app.route('/response')
 def response():
 	code = request.args.get('code')
-	res = requests.post(urls.converttoken.format(code))
-	print(res.text)
-	print(code)
-	return res.text
+	
+	res = api.exchange_code(code)
+	print(res)
+	return str(res)
 	#return render_template('response.html')
 
 if __name__ == '__main__':
