@@ -24,7 +24,7 @@ Click **Add Redirect** and in the box type in `localhost:8000/callback` and save
 ### Configure the code
 Clone the source, and open it up in a [text editor](https://code.visualstudio.com/).
 
-Create a file called `auth.py` in the `static/` folder.
+Create a file called `auth.py` in the source folder.
 Copy+paste this and change what you need to:
 
 ```py

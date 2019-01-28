@@ -1,18 +1,20 @@
 from flask import Flask, render_template, request, session, redirect, jsonify
-from static import urls, auth
 from urllib.parse import quote
-import requests, api
+import requests, api, auth
 
 app = Flask(__name__)
 port = 8000
 app.config['SECRET_KEY'] = auth.secretkey
+
+# Endpoints
+OAUTHURL = "https://discordapp.com/api/oauth2/authorize?client_id={}&redirect_uri={}&response_type=code&scope={}"
 
 @app.route('/')
 def index():
 	redirect = quote(auth.redirect)
 	scopes = quote(auth.scopes)
 
-	url = urls.auth.format(urls.baseapi, auth.id, redirect, scopes)
+	url = OAUTHURL.format(auth.id, redirect, scopes)
 
 	return render_template('index.html', url=url)
 

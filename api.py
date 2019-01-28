@@ -1,5 +1,11 @@
-from static import urls, auth
+import auth
 import requests
+
+# Endpoints
+BASEAPI = "https://discordapp.com/api"
+ME_INFO = "/users/@me"
+TOKEN = "/oauth2/token"
+AUTH = "{}/oauth2/authorize?client_id={}&redirect_uri={}&response_type=code&scope={}"
 
 def exchange_code(code):
 	data = {
@@ -13,7 +19,7 @@ def exchange_code(code):
 	headers = {
 		'Content-Type': 'application/x-www-form-urlencoded'
 	}
-	r = requests.post('{}/oauth2/token'.format(urls.baseapi), data, headers)
+	r = requests.post('{}{}'.format(BASEAPI, TOKEN), data, headers)
 	r.raise_for_status()
 	return r.json()
 
@@ -22,6 +28,6 @@ def get_info(token):
 		'Authorization': 'Bearer {}'.format(token)
 	}
 	
-	r = requests.get('{}/users/@me'.format(urls.baseapi), headers=headers)
+	r = requests.get('{}{}'.format(BASEAPI, ME_INFO), headers=headers)
 	r.raise_for_status()
 	return r.json()
