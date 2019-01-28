@@ -19,9 +19,18 @@ def index():
 def response():
 	code = request.args.get('code')
 	
-	res = api.exchange_code(code)
-	print(res)
-	return str(res)
+	try:
+		res = api.exchange_code(code)
+	except requests.exceptions.HTTPError as e:
+		return "Invalid Code, try again."
+
+	try:
+		user = api.get_info(res['access_token'])
+	except requests.exceptions.HTTPError as e:
+		print(e)
+		return "Invalid Token, try again."
+
+	return str(user)
 	#return render_template('response.html')
 
 if __name__ == '__main__':

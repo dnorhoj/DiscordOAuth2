@@ -16,3 +16,12 @@ def exchange_code(code):
 	r = requests.post('{}/oauth2/token'.format(urls.baseapi), data, headers)
 	r.raise_for_status()
 	return r.json()
+
+def get_info(token):
+	headers = {
+		'Authorization': 'Bearer {}'.format(token)
+	}
+	
+	r = requests.get('{}/users/@me'.format(urls.baseapi), headers=headers)
+	r.raise_for_status()
+	return r.json()
