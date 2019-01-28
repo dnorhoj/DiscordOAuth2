@@ -5,7 +5,7 @@ import requests, api
 
 app = Flask(__name__)
 port = 8000
-app.config['SECRET_KEY'] = "FUCKINGLORT"
+app.config['SECRET_KEY'] = auth.secretkey
 
 @app.route('/')
 def index():
