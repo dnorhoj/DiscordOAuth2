@@ -36,6 +36,10 @@ scopes = 'email identify guilds'
 ```
 
 ### Install requirements
+Before continuing, you need to have the following requirements:
+* Python 3
+* Pip
+
 To install the requirements, simply open a cmd/terminal window and navigate to the source code directory.
 
 Now do `pip install -r requirements.txt`
