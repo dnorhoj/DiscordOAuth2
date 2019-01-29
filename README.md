@@ -35,8 +35,16 @@ redirect = 'http://localhost:8000/callback'
 scopes = 'email identify guilds'
 ```
 
-### Done
-You should now be good to go
+### Install requirements
+To install the requirements, simply open a cmd/terminal window and navigate to the source code directory.
+
+Now do `pip install -r requirements.txt`
+
+### Start the app
+Now launch `main.py` in a command window.
+It should start the flask application.
+
+Go to `localhost:8000` in your browser.
 
 ## More
 Have a good day.
