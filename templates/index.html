@@ -7,6 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <a href="{{ url }}"><button>Login!</button></a>
+    {% if not token %}
+    <a href="{{ url }}"><button>Authorize!</button></a>
+    {% else %}
+    <a href="/me"><button>My info</button></a>
+    <a href="/logout"><button>Log out</button></a>
+    {% endif %}
 </body>
 </html>

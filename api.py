@@ -1,11 +1,13 @@
 import auth
 import requests
 
-# Endpoints
+# Endpoint
 BASEAPI = "https://discordapp.com/api"
-ME_INFO = "/users/@me"
-TOKEN = "/oauth2/token"
-AUTH = "{}/oauth2/authorize?client_id={}&redirect_uri={}&response_type=code&scope={}"
+
+def _getheaders(token):
+	return {
+		'Authorization': 'Bearer {}'.format(token)
+	}
 
 def exchange_code(code):
 	data = {
@@ -19,15 +21,27 @@ def exchange_code(code):
 	headers = {
 		'Content-Type': 'application/x-www-form-urlencoded'
 	}
-	r = requests.post('{}{}'.format(BASEAPI, TOKEN), data, headers)
+	r = requests.post('{}/oauth2/token'.format(BASEAPI), data, headers)
 	r.raise_for_status()
 	return r.json()
 
 def get_info(token):
-	headers = {
-		'Authorization': 'Bearer {}'.format(token)
-	}
-	
-	r = requests.get('{}{}'.format(BASEAPI, ME_INFO), headers=headers)
+	headers = _getheaders(token)
+
+	r = requests.get('{}/users/@me'.format(BASEAPI), headers=headers)
+	r.raise_for_status()
+	return r.json()
+
+def get_guilds(token):
+	headers = _getheaders(token)
+
+	r = requests.get('{}/users/@me/guilds'.format(BASEAPI), headers=headers)
+	r.raise_for_status()
+	return r.json()
+
+def get_connections(token):
+	headers = _getheaders(token)
+
+	r = requests.get('{}/users/@me/connections'.format(BASEAPI), headers=headers)
 	r.raise_for_status()
 	return r.json()
