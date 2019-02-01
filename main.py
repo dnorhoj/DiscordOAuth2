@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, jsonify
 from urllib.parse import quote
-import requests, api, auth
+import requests, api, auth, time
 
 app = Flask(__name__)
 port = 8000
@@ -29,7 +29,49 @@ def response():
 		return "Invalid Code, try again."
 
 	session['token'] = res['access_token']
+	session['scopes'] = auth.scopes.split(" ")
 	return redirect("/me")
+
+@app.route('/newme')
+def nme():
+	if session.get('token') is None:
+		return redirect("/")
+
+	try:
+		if "identify" in session.get('scopes'):
+			user = api.get_info(session.get('token'))
+		else:
+			user = None
+
+		if "guilds" in session.get('scopes'):
+			guilds = jsonify(api.get_guilds(session.get('token')))
+		else:
+			guilds = None
+
+		if "connections" in session.get('scopes'):
+			connections = api.get_connections(session.get('token'))
+		else:
+			connections = None
+
+	except requests.exceptions.HTTPError as e:
+		return "Unexpected Error:<br>{}".format(e)
+	
+	print(guilds)
+
+	if "email" in session.get('scopes'):
+		email = True
+	else:
+		email = False
+
+	print(session.get('scopes'))
+
+	return render_template(
+		'me.html',
+		user=user,
+		guilds=guilds,
+		connections=connections,
+		email=email
+	)
 
 @app.route('/me')
 def me():
@@ -42,7 +84,6 @@ def me():
 		return "Invalid Token, try again."
 
 	return jsonify(user)
-	#return render_template('response.html')
 
 @app.route('/guilds')
 def guilds():
